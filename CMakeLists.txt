@@ -51,3 +51,4 @@ else()
 endif()
 
 target_link_libraries(vocabulary PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/vocabulary DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

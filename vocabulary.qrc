@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/vocabulary">
+        <file>vocabulary</file>
+    </qresource>
+</RCC>

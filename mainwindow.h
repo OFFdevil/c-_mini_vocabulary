@@ -5,9 +5,8 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QString>
-#include <QFile>
-#include <QDebug>
 #include <QTimer>
+#include <QFile>
 #include <cstring>
 #include <vector>
 #include <string>
@@ -15,7 +14,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
-#include <unistd.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,9 +29,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void new_function();
-    void slot1();
-    std::string returnLine();
+    void start_find();
+    void CheckSubString();
+    std::string ReturnLineInput();
 
 private:
     Ui::MainWindow *ui;

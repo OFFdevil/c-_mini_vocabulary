@@ -11,5 +11,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.setWindowTitle("Vocabulary");
     w.show();
+
     return a.exec();
 }

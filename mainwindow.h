@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    bool LCS(const std::string& s1, const std::string& s2);
     ~MainWindow();
 
 private slots:

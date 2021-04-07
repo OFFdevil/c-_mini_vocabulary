@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QTimer *Timer = new QTimer(this);
     connect(Timer, &QTimer::timeout, this, &MainWindow::new_function);
-    Timer->start(10);
+    Timer->start(1);
 }
 
 void MainWindow::new_function(){
@@ -28,21 +28,48 @@ void MainWindow::new_function(){
         file.close();
         file.open("vocabulary", std::ios_base::in);
     }
-    slot1();
+    if(start_line != ""){
+        slot1();
+    }
 }
 
 void MainWindow::slot1(){
     std::string subline = returnLine();
     if(QFile::exists("vocabulary")) {
         std::string line;
-        count_line += 100;
+        count_line += 250;
         do{
             getline(file, line);
             k++;
-            if(line.find(subline) != std::string::npos){
+            if(line.find(subline) != std::string::npos || LCS(line, subline)){
                 LineOutput->append(QString::fromStdString(line));
             }
         }while(k <= count_line && !file.eof());
+    }
+}
+
+bool MainWindow::LCS(const std::string& s1, const std::string& s2){
+    if(s1.size() < s2.size()){
+        return 0;
+    }else{
+        std::size_t lcs_count = 0;
+        std::vector<std::size_t> lcs1(s1.size() + 1, 0), lcs2(s1.size() + 1, 0);
+        for(std::size_t i=0; i <= s1.size(); i++){
+            for(std::size_t j=0; j <= s2.size(); j++){
+                if(0 < j){
+                    lcs2[j] = std::max(lcs2[j], lcs2[j-1]);
+                }
+                if(0 < i){
+                    lcs2[j] = std::max(lcs2[j], lcs1[j]);
+                }
+                if(0 < i && 0 < j && lcs2[j] < lcs1[j-1] + 1 && s1[i] == s2[j]){
+                    lcs2[j] = lcs1[j-1] + 1;
+                }
+                lcs_count = std::max(lcs_count, lcs2[j]);
+            }
+            std::swap(lcs1, lcs2);
+        }
+        return lcs_count == s2.size() ? 1 : 0;
     }
 }
 
@@ -54,16 +81,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-/*while(getline(file, line)){
-    k++;
-    std::cout<<line <<std::endl;
-    char *pch = std::strstr(subline, line);
-    if(pch != NULL){
-        LineOutput->append(QString::fromStdString(line));
-    }
-    if(k % 3000 == 0){
-        break;
-    }
-}*/
-
